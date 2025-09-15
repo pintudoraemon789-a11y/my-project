@@ -1,33 +1,20 @@
+# bot.py
 import telebot
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()  # Memuat token dari .env
 
 API_TOKEN = os.getenv("TELEGRAM_TOKEN")
 bot = telebot.TeleBot(API_TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.reply_to(message, "Halo! Kirimkan file (gambar, video, dll) dan saya akan memberikan link untuk mengaksesnya.")
+    bot.reply_to(message, "Halo! Saya adalah bot Telegram yang dibuat dengan Python!")
 
-@bot.message_handler(content_types=['photo', 'video', 'document'])
-def handle_file(message):
-    file_id = None
-    file_type = message.content_type
-    
-    if file_type == 'photo':
-        file_id = message.photo[-1].file_id 
-    elif file_type == 'video':
-        file_id = message.video.file_id
-    elif file_type == 'document':
-        file_id = message.document.file_id
-    
-    file_info = bot.get_file(file_id)
-    
-    file_url = f"https://api.telegram.org/file/bot{API_TOKEN}/{file_info.file_path}"
-    
-    bot.reply_to(message, f"Ini adalah link untuk file Anda: {file_url}")
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    bot.reply_to(message, message.text)
 
 if __name__ == "__main__":
     print("Bot sedang berjalan...")
