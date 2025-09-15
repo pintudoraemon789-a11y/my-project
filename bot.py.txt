@@ -3,7 +3,7 @@ import telebot
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Memuat token dari .env
+load_dotenv()
 
 API_TOKEN = os.getenv("TELEGRAM_TOKEN")
 bot = telebot.TeleBot(API_TOKEN)
@@ -44,5 +44,6 @@ def handle_file(message):
 if __name__ == "__main__":
     print("Bot sedang berjalan...")
     bot.infinity_polling()
+
 
 
