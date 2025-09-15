@@ -10,7 +10,10 @@ bot = telebot.TeleBot(API_TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.reply_to(message, "Halo! Saya adalah bot Telegram yang dibuat dengan Python!")
+    if message.text == "/start":
+        bot.reply_to(message, "Halo! Saya adalah bot Telegram yang dibuat dengan Python. Saya bisa membantu Anda mengirimkan file dan membagikan link. Gunakan /help untuk info lebih lanjut.")
+    elif message.text == "/help":
+        bot.reply_to(message, "Gunakan perintah berikut:\n/start - Memulai interaksi dengan bot\n/setting - Mengatur preferensi bot\n/sendfile - Kirim file untuk mendapatkan link.")
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
@@ -41,4 +44,5 @@ def handle_file(message):
 if __name__ == "__main__":
     print("Bot sedang berjalan...")
     bot.infinity_polling()
+
 
